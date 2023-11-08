@@ -1,0 +1,9 @@
+[package]
+name = "magic-loc-protocol"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+embedded-hal = "0.2.*"
+heapless = { version = "0.7.14", default-features = false }
+dw3000 = { package = "dw3000", git = "https://github.com/ProfFan/dw3000", branch = "RUST" }
