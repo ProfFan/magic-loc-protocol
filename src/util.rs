@@ -2,9 +2,9 @@ use dw3000::Config;
 
 /// Calculate frame TX time in nanoseconds
 pub fn frame_tx_time(mut frame_len: u32, config: &Config, include_body: bool) -> u32 {
-    let mut tx_time = 0u32;
-    let mut shr_len = 0u32;
-    let mut sym_timing_ind = 0;
+    let mut tx_time;
+    let mut shr_len;
+    let mut sym_timing_ind;
 
     const DATA_BLOCK_SIZE: u32 = 330;
     const REED_SOLOM_BITS: u32 = 48;
