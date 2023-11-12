@@ -11,7 +11,7 @@ pub struct PollPacket {
 
 #[bitsize(4)]
 #[derive(FromBits, Debug, PartialEq)]
-enum PacketType {
+pub enum PacketType {
     Poll = 0,
     Response = 1,
     Final = 2,
