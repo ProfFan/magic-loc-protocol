@@ -1,4 +1,4 @@
-use dw3000::Config;
+use dw3000_ng::Config;
 
 /// Calculate frame TX time in nanoseconds
 pub fn frame_tx_time(mut frame_len: u32, config: &Config, include_body: bool) -> u32 {
@@ -31,30 +31,30 @@ pub fn frame_tx_time(mut frame_len: u32, config: &Config, include_body: bool) ->
     ];
 
     match config.pulse_repetition_frequency {
-        dw3000::configs::PulseRepetitionFrequency::Mhz16 => sym_timing_ind = SYM_TIM_16MHZ,
-        dw3000::configs::PulseRepetitionFrequency::Mhz64 => sym_timing_ind = SYM_TIM_64MHZ,
+        dw3000_ng::configs::PulseRepetitionFrequency::Mhz16 => sym_timing_ind = SYM_TIM_16MHZ,
+        dw3000_ng::configs::PulseRepetitionFrequency::Mhz64 => sym_timing_ind = SYM_TIM_64MHZ,
     }
 
     // set shr_len
     match config.preamble_length {
-        dw3000::configs::PreambleLength::Symbols32 => shr_len = 32,
-        dw3000::configs::PreambleLength::Symbols64 => shr_len = 64,
-        dw3000::configs::PreambleLength::Symbols72 => shr_len = 72,
-        dw3000::configs::PreambleLength::Symbols128 => shr_len = 128,
-        dw3000::configs::PreambleLength::Symbols256 => shr_len = 256,
-        dw3000::configs::PreambleLength::Symbols512 => shr_len = 512,
-        dw3000::configs::PreambleLength::Symbols1024 => shr_len = 1024,
-        dw3000::configs::PreambleLength::Symbols1536 => shr_len = 1536,
-        dw3000::configs::PreambleLength::Symbols2048 => shr_len = 2048,
-        dw3000::configs::PreambleLength::Symbols4096 => shr_len = 4096,
+        dw3000_ng::configs::PreambleLength::Symbols32 => shr_len = 32,
+        dw3000_ng::configs::PreambleLength::Symbols64 => shr_len = 64,
+        dw3000_ng::configs::PreambleLength::Symbols72 => shr_len = 72,
+        dw3000_ng::configs::PreambleLength::Symbols128 => shr_len = 128,
+        dw3000_ng::configs::PreambleLength::Symbols256 => shr_len = 256,
+        dw3000_ng::configs::PreambleLength::Symbols512 => shr_len = 512,
+        dw3000_ng::configs::PreambleLength::Symbols1024 => shr_len = 1024,
+        dw3000_ng::configs::PreambleLength::Symbols1536 => shr_len = 1536,
+        dw3000_ng::configs::PreambleLength::Symbols2048 => shr_len = 2048,
+        dw3000_ng::configs::PreambleLength::Symbols4096 => shr_len = 4096,
     }
 
     match config.bitrate {
-        dw3000::configs::BitRate::Kbps850 => {
+        dw3000_ng::configs::BitRate::Kbps850 => {
             sym_timing_ind += SYM_TIM_850K;
             shr_len += 8
         }
-        dw3000::configs::BitRate::Kbps6800 => {
+        dw3000_ng::configs::BitRate::Kbps6800 => {
             sym_timing_ind += SYM_TIM_6M8;
             shr_len += 8
         }
