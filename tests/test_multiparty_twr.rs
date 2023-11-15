@@ -76,7 +76,13 @@ fn scenario_8anchor_3tag() {
         for (j, tag_state_machine) in tag_state_machines.iter_mut().enumerate() {
             let rxts = txts + j as u64;
             let tsm = tag_state_machine.as_waiting_for_anchor_final_mut().unwrap();
-            tsm.set_response_rx_ts(i, anchor_state_machine.as_sending_final_mut().unwrap().get_response_rx_ts(j));
+            tsm.set_response_rx_ts(
+                i,
+                anchor_state_machine
+                    .as_sending_final_mut()
+                    .unwrap()
+                    .get_response_rx_ts(j),
+            );
             tsm.set_final_tx_ts(i, txts);
             tsm.set_final_rx_ts(i, rxts);
         }
@@ -84,5 +90,5 @@ fn scenario_8anchor_3tag() {
         anchor_state_machine.to_idle().unwrap();
     }
 
-    println!("Tag SM status: {:?}", tag_state_machines);
+    println!("Tag SM status: {:#?}", tag_state_machines);
 }

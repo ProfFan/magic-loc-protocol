@@ -68,7 +68,7 @@ impl AnchorSideStateMachine<Idle> {
     ) -> AnchorSideStateMachine<WaitingForResponse> {
         AnchorSideStateMachine {
             tags: self.tags,
-            poll_tx_ts,
+            poll_tx_ts: poll_tx_ts,
             response_rx_ts: self.response_rx_ts,
             _state: WaitingForResponse,
             address: self.address,
