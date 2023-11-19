@@ -133,7 +133,7 @@ dependencies = [
 [[package]]
 name = "dw3000-ng"
 version = "0.3.1"
-source = "git+https://github.com/ProfFan/dw3000?rev=b23bfc76a8b776ec092cb8fca5ed3fb448b9a65c#b23bfc76a8b776ec092cb8fca5ed3fb448b9a65c"
+source = "git+https://github.com/ProfFan/dw3000?rev=2188edc1dfa2e3959400314752b6af7df306f5f5#2188edc1dfa2e3959400314752b6af7df306f5f5"
 dependencies = [
  "byte",
  "defmt",
