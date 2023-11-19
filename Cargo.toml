@@ -6,7 +6,7 @@ edition = "2021"
 [dependencies]
 embedded-hal = "0.2.*"
 heapless = { version = "0.7.14", default-features = false }
-dw3000-ng = { package = "dw3000-ng", git = "https://github.com/ProfFan/dw3000", branch = "RUST" }
+dw3000-ng = { package = "dw3000-ng", git = "https://github.com/ProfFan/dw3000", rev = "b23bfc76a8b776ec092cb8fca5ed3fb448b9a65c" }
 array-init = "2.1.0"
 bilge = { package = "bilge", git = "https://github.com/hecatia-elegua/bilge" }
 defmt = "0.3"
