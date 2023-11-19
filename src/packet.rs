@@ -1,4 +1,5 @@
 use bilge::prelude::*;
+use defmt::Format;
 
 // A poll packet
 #[bitsize(48)]
@@ -9,8 +10,20 @@ pub struct PollPacket {
     pub tx_timestamp: u40,
 }
 
+impl Format for PollPacket {
+    fn format(&self, f: defmt::Formatter) {
+        defmt::write!(
+            f,
+            "PollPacket {{ packet_type: {:?}, resv: {:#x}, tx_timestamp: {} }}",
+            self.packet_type(),
+            self.resv().value(),
+            self.tx_timestamp().value()
+        )
+    }
+}
+
 #[bitsize(4)]
-#[derive(FromBits, Debug, PartialEq)]
+#[derive(FromBits, Debug, PartialEq, Format)]
 pub enum PacketType {
     Poll = 0,
     Response = 1,

@@ -238,6 +238,7 @@ version = "0.1.0"
 dependencies = [
  "array-init",
  "bilge",
+ "defmt",
  "dw3000-ng",
  "embedded-hal",
  "heapless",
