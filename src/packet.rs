@@ -22,6 +22,46 @@ impl Format for PollPacket {
     }
 }
 
+// A response packet
+#[bitsize(8)]
+#[derive(FromBits, DebugBits, PartialEq)]
+pub struct ResponsePacket {
+    pub packet_type: PacketType,
+    pub resv: u4,
+}
+
+impl Format for ResponsePacket {
+    fn format(&self, f: defmt::Formatter) {
+        defmt::write!(
+            f,
+            "ResponsePacket {{ packet_type: {:?}, resv: {:#x} }}",
+            self.packet_type(),
+            self.resv().value(),
+        )
+    }
+}
+
+// A final packet
+#[bitsize(128)]
+#[derive(FromBits, DebugBits, PartialEq)]
+pub struct FinalPacket {
+    pub packet_type: PacketType,
+    pub resv: u4,
+    pub rx_timestamps: [u40; 3],
+}
+
+impl Format for FinalPacket {
+    fn format(&self, f: defmt::Formatter) {
+        defmt::write!(
+            f,
+            "FinalPacket {{ packet_type: {:?}, resv: {:#x} }}",
+            self.packet_type(),
+            self.resv().value(),
+        )
+    }
+}
+
+
 #[bitsize(4)]
 #[derive(FromBits, Debug, PartialEq, Format)]
 pub enum PacketType {
@@ -45,5 +85,36 @@ mod tests {
         let poll_packet_bytes = poll_packet.value.to_le_bytes();
 
         assert_eq!(poll_packet_bytes, [0x00, 0x89, 0x67, 0x35, 0x12, 0x00]);
+    }
+
+    #[test]
+    fn test_response_packet() {
+        let response_packet = ResponsePacket::new(PacketType::Response, u4::new(0));
+
+        let response_packet_bytes = response_packet.value.to_le_bytes();
+
+        assert_eq!(response_packet_bytes, [0x1]);
+    }
+
+    #[test]
+    fn test_final_packet() {
+        let final_packet = FinalPacket::new(
+            PacketType::Final,
+            u4::new(0),
+            [u40::new(0x12356789).into(), u40::new(0x12356789).into(), u40::new(0x12356789).into()],
+        );
+
+        let final_packet_bytes = final_packet.value.to_le_bytes();
+        let mut ts_bytes: [u8; 5] = [0; 5];
+        ts_bytes.copy_from_slice(&(0x12356789u64.to_le_bytes()[..5]));
+
+        assert_eq!(
+            final_packet_bytes,
+            [
+                0x02, 0x89, 0x67, 0x35, 0x12, 0x00, 0x89, 0x67, 0x35, 0x12, 0x00, 0x89, 0x67, 0x35, 0x12, 0x00
+            ]
+        );
+
+        assert_eq!(final_packet_bytes[1..6], ts_bytes);
     }
 }
