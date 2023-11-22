@@ -24,12 +24,12 @@ pub struct AnchorSideStateMachine<STATE> {
     /// The current TX timestamp for the poll message.
     ///
     /// Should not be accessible when state is `Idle`.
-    poll_tx_ts: u64,
+    pub poll_tx_ts: Option<u64>,
 
     /// The current RX timestamps for the response messages.
     ///
     /// Can only be set when state is `WaitingForResponse`, and read when state is `SendingFinal`.
-    response_rx_ts: Vec<u64, 16>,
+    pub response_rx_ts: Vec<Option<u64>, 16>,
 
     /// The current state of the state machine.
     _state: STATE,
@@ -54,9 +54,9 @@ impl AnchorSideStateMachine<Idle> {
         Self {
             address: address,
             anchor_addresses: anchors,
-            response_rx_ts: Vec::from_iter((0..tags.len()).map(|_| 0)),
+            response_rx_ts: Vec::from_iter((0..tags.len()).map(|_| None)),
             tags: tags,
-            poll_tx_ts: 0,
+            poll_tx_ts: None,
             _state: Idle,
         }
     }
@@ -68,7 +68,7 @@ impl AnchorSideStateMachine<Idle> {
     ) -> AnchorSideStateMachine<WaitingForResponse> {
         AnchorSideStateMachine {
             tags: self.tags,
-            poll_tx_ts: poll_tx_ts,
+            poll_tx_ts: Some(poll_tx_ts),
             response_rx_ts: self.response_rx_ts,
             _state: WaitingForResponse,
             address: self.address,
@@ -81,7 +81,7 @@ impl AnchorSideStateMachine<Idle> {
 impl AnchorSideStateMachine<WaitingForResponse> {
     /// Set the RX timestamp for a response message.
     pub fn set_response_rx_ts(&mut self, tag_idx: usize, response_rx_ts: u64) {
-        self.response_rx_ts[tag_idx] = response_rx_ts;
+        self.response_rx_ts[tag_idx] = Some(response_rx_ts);
     }
 
     /// Transition to the `SendingFinal` state.
@@ -105,7 +105,7 @@ impl AnchorSideStateMachine<SendingFinal> {
     pub fn idle(self) -> AnchorSideStateMachine<Idle> {
         AnchorSideStateMachine {
             tags: self.tags,
-            poll_tx_ts: 0,
+            poll_tx_ts: None,
             response_rx_ts: self.response_rx_ts,
             _state: Idle,
             address: self.address,
@@ -114,7 +114,7 @@ impl AnchorSideStateMachine<SendingFinal> {
     }
 
     /// Get the RX timestamp for a response message.
-    pub fn get_response_rx_ts(&self, tag_idx: usize) -> u64 {
+    pub fn get_response_rx_ts(&self, tag_idx: usize) -> Option<u64> {
         self.response_rx_ts[tag_idx]
     }
 }
@@ -379,6 +379,6 @@ mod tests {
         let state_machine: &AnchorSideStateMachine<WaitingForResponse> =
             &any_sm.try_into().unwrap();
 
-        assert_eq!(state_machine.poll_tx_ts, 1);
+        assert_eq!(state_machine.poll_tx_ts, Some(1));
     }
 }

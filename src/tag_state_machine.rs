@@ -95,12 +95,28 @@ impl TagSideStateMachine<Idle> {
 /// Implement `TagSideStateMachine` for `WaitingForAnchorPoll`.
 impl TagSideStateMachine<WaitingForAnchorPoll> {
     /// Set the TX timestamp for a poll message.
-    pub fn set_poll_tx_ts(&mut self, anchor_idx: usize, poll_tx_ts: u64) {
+    pub fn set_poll_tx_ts_idx(&mut self, anchor_idx: usize, poll_tx_ts: u64) {
+        self.poll_tx_ts[anchor_idx] = poll_tx_ts;
+    }
+
+    /// Set the TX timestamp for a poll message.
+    /// 
+    /// Will panic if the anchor address is not found.
+    pub fn set_poll_tx_ts(&mut self, anchor_addr: u16, poll_tx_ts: u64) {
+        let anchor_idx = self.anchors.iter().position(|&addr| addr == anchor_addr).unwrap();
         self.poll_tx_ts[anchor_idx] = poll_tx_ts;
     }
 
     /// Set the RX timestamp for a poll message.
-    pub fn set_poll_rx_ts(&mut self, anchor_idx: usize, poll_rx_ts: u64) {
+    pub fn set_poll_rx_ts_idx(&mut self, anchor_idx: usize, poll_rx_ts: u64) {
+        self.poll_rx_ts[anchor_idx] = poll_rx_ts;
+    }
+
+    /// Set the RX timestamp for a poll message.
+    /// 
+    /// Will panic if the anchor address is not found.
+    pub fn set_poll_rx_ts(&mut self, anchor_addr: u16, poll_rx_ts: u64) {
+        let anchor_idx = self.anchors.iter().position(|&addr| addr == anchor_addr).unwrap();
         self.poll_rx_ts[anchor_idx] = poll_rx_ts;
     }
 
@@ -130,17 +146,41 @@ impl TagSideStateMachine<WaitingForAnchorFinal> {
     }
 
     /// Set the RX timestamp for a response message.
-    pub fn set_response_rx_ts(&mut self, anchor_idx: usize, response_rx_ts: u64) {
+    pub fn set_response_rx_ts_idx(&mut self, anchor_idx: usize, response_rx_ts: u64) {
+        self.response_rx_ts[anchor_idx] = response_rx_ts;
+    }
+    
+    /// Set the RX timestamp for a response message.
+    /// 
+    /// Will panic if the anchor address is not found.
+    pub fn set_response_rx_ts(&mut self, anchor_addr: u16, response_rx_ts: u64) {
+        let anchor_idx = self.anchors.iter().position(|&addr| addr == anchor_addr).unwrap();
         self.response_rx_ts[anchor_idx] = response_rx_ts;
     }
 
     /// Set the TX timestamp for a final message. (parsed from the final message)
-    pub fn set_final_tx_ts(&mut self, anchor_idx: usize, final_tx_ts: u64) {
+    pub fn set_final_tx_ts_idx(&mut self, anchor_idx: usize, final_tx_ts: u64) {
+        self.final_tx_ts[anchor_idx] = final_tx_ts;
+    }
+
+    /// Set the TX timestamp for a final message. (parsed from the final message)
+    /// 
+    /// Will panic if the anchor address is not found.
+    pub fn set_final_tx_ts(&mut self, anchor_addr: u16, final_tx_ts: u64) {
+        let anchor_idx = self.anchors.iter().position(|&addr| addr == anchor_addr).unwrap();
         self.final_tx_ts[anchor_idx] = final_tx_ts;
     }
 
     /// Set the RX timestamp for a final message. (retrieved from the RX timestamp register)
-    pub fn set_final_rx_ts(&mut self, anchor_idx: usize, final_rx_ts: u64) {
+    pub fn set_final_rx_ts_idx(&mut self, anchor_idx: usize, final_rx_ts: u64) {
+        self.final_rx_ts[anchor_idx] = final_rx_ts;
+    }
+
+    /// Set the RX timestamp for a final message. (retrieved from the RX timestamp register)
+    /// 
+    /// Will panic if the anchor address is not found.
+    pub fn set_final_rx_ts(&mut self, anchor_addr: u16, final_rx_ts: u64) {
+        let anchor_idx = self.anchors.iter().position(|&addr| addr == anchor_addr).unwrap();
         self.final_rx_ts[anchor_idx] = final_rx_ts;
     }
 

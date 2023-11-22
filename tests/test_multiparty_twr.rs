@@ -45,8 +45,8 @@ fn scenario_8anchor_3tag() {
         for (j, tag_state_machine) in tag_state_machines.iter_mut().enumerate() {
             let rxts = txts + j as u64;
             let tsm = tag_state_machine.as_waiting_for_anchor_poll_mut().unwrap();
-            tsm.set_poll_tx_ts(i, txts);
-            tsm.set_poll_rx_ts(i, rxts);
+            tsm.set_poll_tx_ts_idx(i, txts);
+            tsm.set_poll_rx_ts_idx(i, rxts);
         }
     }
 
@@ -76,15 +76,15 @@ fn scenario_8anchor_3tag() {
         for (j, tag_state_machine) in tag_state_machines.iter_mut().enumerate() {
             let rxts = txts + j as u64;
             let tsm = tag_state_machine.as_waiting_for_anchor_final_mut().unwrap();
-            tsm.set_response_rx_ts(
+            tsm.set_response_rx_ts_idx(
                 i,
                 anchor_state_machine
                     .as_sending_final_mut()
                     .unwrap()
-                    .get_response_rx_ts(j),
+                    .get_response_rx_ts(j).unwrap(),
             );
-            tsm.set_final_tx_ts(i, txts);
-            tsm.set_final_rx_ts(i, rxts);
+            tsm.set_final_tx_ts_idx(i, txts);
+            tsm.set_final_rx_ts_idx(i, rxts);
         }
 
         anchor_state_machine.to_idle().unwrap();
@@ -131,8 +131,8 @@ fn scenario_8anchor_3tag_fail() {
         for (j, tag_state_machine) in tag_state_machines.iter_mut().enumerate() {
             let rxts = txts + j as u64;
             let tsm = tag_state_machine.as_waiting_for_anchor_poll_mut().unwrap();
-            tsm.set_poll_tx_ts(i, txts);
-            tsm.set_poll_rx_ts(i, rxts);
+            tsm.set_poll_tx_ts_idx(i, txts);
+            tsm.set_poll_rx_ts_idx(i, rxts);
         }
     }
 
@@ -162,15 +162,15 @@ fn scenario_8anchor_3tag_fail() {
         for (j, tag_state_machine) in tag_state_machines.iter_mut().enumerate() {
             let rxts = txts + j as u64;
             let tsm = tag_state_machine.as_waiting_for_anchor_final_mut().unwrap();
-            tsm.set_response_rx_ts(
+            tsm.set_response_rx_ts_idx(
                 i,
                 anchor_state_machine
                     .as_sending_final_mut()
                     .unwrap()
-                    .get_response_rx_ts(j),
+                    .get_response_rx_ts(j).unwrap(),
             );
-            tsm.set_final_tx_ts(i, txts);
-            tsm.set_final_rx_ts(i, rxts);
+            tsm.set_final_tx_ts_idx(i, txts);
+            tsm.set_final_rx_ts_idx(i, rxts);
         }
 
         anchor_state_machine.to_idle().unwrap();
