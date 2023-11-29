@@ -22,22 +22,22 @@ pub struct TagSideStateMachine<STATE> {
     tags: Vec<u16, 16>,
 
     /// Poll TX timestamps (in anchor time)
-    poll_tx_ts: Vec<u64, 16>,
+    pub poll_tx_ts: Vec<u64, 16>,
 
     /// Poll RX timestamps (in tag time)
-    poll_rx_ts: Vec<u64, 16>,
+    pub poll_rx_ts: Vec<u64, 16>,
 
     /// Response TX timestamp (in tag time)
-    response_tx_ts: u64,
+    pub response_tx_ts: u64,
 
     /// Response RX timestamps (in anchor time)
-    response_rx_ts: Vec<u64, 16>,
+    pub response_rx_ts: Vec<u64, 16>,
 
     /// Final TX timestamps (in anchor time)
-    final_tx_ts: Vec<u64, 16>,
+    pub final_tx_ts: Vec<u64, 16>,
 
     /// Final RX timestamps (in tag time)
-    final_rx_ts: Vec<u64, 16>,
+    pub final_rx_ts: Vec<u64, 16>,
 
     /// The current state of the state machine.
     _state: STATE,
