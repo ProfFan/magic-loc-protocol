@@ -132,8 +132,9 @@ dependencies = [
 
 [[package]]
 name = "dw3000-ng"
-version = "0.3.1"
-source = "git+https://github.com/ProfFan/dw3000?rev=1bfbcf819a8fc3966a932276d83ddeddf13c31c3#1bfbcf819a8fc3966a932276d83ddeddf13c31c3"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c7a0afcab1be3d8b300709c5c1d7d6d21fcc2f8922fc171c94d7d10c771fbef1"
 dependencies = [
  "byte",
  "defmt",
