@@ -76,5 +76,5 @@ pub fn frame_tx_time(mut frame_len: u32, config: &Config, include_body: bool) ->
         tx_time += frame_len * SYM_TIM_LUT[(sym_timing_ind + SYM_TIM_DAT) as usize];
     }
 
-    return tx_time;
+    tx_time
 }

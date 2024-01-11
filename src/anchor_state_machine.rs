@@ -52,10 +52,10 @@ impl AnchorSideStateMachine<Idle> {
     /// Create a new `AnchorSideStateMachine` in the `Idle` state.
     pub fn new(address: u16, anchors: Vec<u16, 16>, tags: Vec<u16, 16>) -> Self {
         Self {
-            address: address,
+            address,
             anchor_addresses: anchors,
             response_rx_ts: Vec::from_iter((0..tags.len()).map(|_| None)),
-            tags: tags,
+            tags,
             poll_tx_ts: None,
             _state: Idle,
         }

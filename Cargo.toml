@@ -1,13 +1,13 @@
 [package]
 name = "magic-loc-protocol"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 
 [dependencies]
-embedded-hal = "0.2.*"
-heapless = { version = "^0.8.0", default-features = false }
-dw3000-ng = "0.4.*"
-array-init = "2.1.0"
+embedded-hal = "1.0.0"
+heapless = { version = "0", default-features = false }
+dw3000-ng = "0.5"
+array-init = "2.1"
 bilge = { package = "bilge", git = "https://github.com/hecatia-elegua/bilge" }
 defmt = "0.3"
 arbitrary-int = "1.2.6"

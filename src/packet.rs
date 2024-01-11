@@ -78,6 +78,7 @@ pub struct FinalPacket {
     pub tx_timestamp: DeviceTimestamp,
 }
 
+/// The Final Packet
 impl FinalPacket {
     pub fn new(packet_type: PacketType, resv: u4, rx_timestamps: [u40; 3], tx_timestamp: u40) -> Self {
         Self {
@@ -96,26 +97,7 @@ impl FinalPacket {
     }
 }
 
-// A final packet
-// #[bitsize(128)]
-// #[derive(FromBits, DebugBits, PartialEq)]
-// pub struct FinalPacket {
-//     pub packet_type: PacketType,
-//     pub resv: u4,
-//     pub rx_timestamps: [u40; 3],
-// }
-
-// impl Format for FinalPacket {
-//     fn format(&self, f: defmt::Formatter) {
-//         defmt::write!(
-//             f,
-//             "FinalPacket {{ packet_type: {:?}, resv: {:#x} }}",
-//             self.packet_type(),
-//             self.resv().value(),
-//         )
-//     }
-// }
-
+/// Packet Type
 #[bitsize(4)]
 #[derive(FromBits, Debug, PartialEq, Format)]
 pub enum PacketType {
@@ -182,7 +164,6 @@ mod tests {
         let mut some_bytes: [u8; 21] = [0; 21];
 
         // copy from final_packet_bytes
-
         some_bytes.copy_from_slice(&final_packet_bytes[..]);
 
         let transmuted: FinalPacket = transmute!(some_bytes);
