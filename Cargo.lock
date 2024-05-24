@@ -203,7 +203,7 @@ checksum = "4ec2a862134d2a7d32d7983ddcdd1c4923530833c9f2ea1a44fc5fa473989058"
 
 [[package]]
 name = "magic-loc-protocol"
-version = "0.3.0"
+version = "0.4.0"
 dependencies = [
  "arbitrary-int",
  "array-init",
