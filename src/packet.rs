@@ -1,6 +1,6 @@
 use bilge::prelude::*;
 use defmt::Format;
-use zerocopy_derive::{FromBytes, Immutable, IntoBytes};
+use zerocopy_derive::{FromBytes, Immutable, IntoBytes, KnownLayout};
 
 // A poll packet
 #[bitsize(48)]
@@ -43,7 +43,7 @@ impl Format for ResponsePacket {
 }
 
 // DW3000 40-bit timestamp
-#[derive(Debug, Format, Copy, Clone, PartialEq, FromBytes, IntoBytes, Immutable)]
+#[derive(Debug, Format, Copy, Clone, PartialEq, FromBytes, IntoBytes, Immutable, KnownLayout)]
 #[repr(packed)]
 pub struct DeviceTimestamp {
     pub bytes: [u8; 5],
@@ -70,7 +70,7 @@ pub struct PacketHeader {
 }
 
 // Final Packet
-#[derive(Debug, Format, Clone, Copy, PartialEq, FromBytes, IntoBytes, Immutable)]
+#[derive(Debug, Format, Clone, Copy, PartialEq, FromBytes, IntoBytes, Immutable, KnownLayout)]
 #[repr(packed)]
 pub struct FinalPacket {
     pub header_byte: u8,
