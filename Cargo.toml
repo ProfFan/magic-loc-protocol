@@ -12,5 +12,5 @@ array-init = "2.1"
 bilge = { package = "bilge", git = "https://github.com/hecatia-elegua/bilge" }
 defmt = "0.3"
 arbitrary-int = "1.2.6"
-zerocopy = "0.8"
+zerocopy = { version = "0.8", features = ["derive"] }
 zerocopy-derive = "0.8"

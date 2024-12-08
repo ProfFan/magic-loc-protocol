@@ -44,7 +44,7 @@ impl Format for ResponsePacket {
 
 // DW3000 40-bit timestamp
 #[derive(Debug, Format, Copy, Clone, PartialEq, FromBytes, IntoBytes, Immutable, KnownLayout)]
-#[repr(packed)]
+#[repr(C)]
 pub struct DeviceTimestamp {
     pub bytes: [u8; 5],
 }
@@ -71,7 +71,7 @@ pub struct PacketHeader {
 
 // Final Packet
 #[derive(Debug, Format, Clone, Copy, PartialEq, FromBytes, IntoBytes, Immutable, KnownLayout)]
-#[repr(packed)]
+#[repr(C)]
 pub struct FinalPacket {
     pub header_byte: u8,
     pub rx_timestamps: [DeviceTimestamp; 3],
