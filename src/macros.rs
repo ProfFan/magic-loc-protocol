@@ -1,12 +1,12 @@
 // Macros for auto generating `TryInto`, `From`, and `TryFrom` for state machines.
 
 /// Generates the `TryInto`, `From`, and `TryFrom` (`AnyXXX`, `XXXErased`) for a state machine.
-/// 
+///
 /// # Example
-/// 
+///
 /// ```notrust
 /// use magic_loc_protocol::macros::generate_state_machine_traits;
-/// 
+///
 /// generate_state_machine_traits!(
 ///    /// The state machine.
 ///    AnchorSideStateMachine,
@@ -24,6 +24,5 @@ macro_rules! generate_state_machine_traits {
         $state_machine:ident,
         $any_state_machine:ident,
         $state_machine_erased:ident,
-    ) => {}
-
+    ) => {};
 }

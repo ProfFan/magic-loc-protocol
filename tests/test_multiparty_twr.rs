@@ -81,7 +81,8 @@ fn scenario_8anchor_3tag() {
                 anchor_state_machine
                     .as_sending_final_mut()
                     .unwrap()
-                    .get_response_rx_ts(j).unwrap(),
+                    .get_response_rx_ts(j)
+                    .unwrap(),
             );
             tsm.set_final_tx_ts_idx(i, txts);
             tsm.set_final_rx_ts_idx(i, rxts);
@@ -167,7 +168,8 @@ fn scenario_8anchor_3tag_fail() {
                 anchor_state_machine
                     .as_sending_final_mut()
                     .unwrap()
-                    .get_response_rx_ts(j).unwrap(),
+                    .get_response_rx_ts(j)
+                    .unwrap(),
             );
             tsm.set_final_tx_ts_idx(i, txts);
             tsm.set_final_rx_ts_idx(i, rxts);

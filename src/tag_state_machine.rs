@@ -60,15 +60,15 @@ impl TagSideStateMachine<Idle> {
     /// Create a new `TagSideStateMachine` in the `Idle` state.
     pub fn new(address: u16, anchors: Vec<u16, 16>, tags: Vec<u16, 16>) -> Self {
         Self {
-            address: address,
+            address,
             poll_tx_ts: Vec::from_iter(core::iter::repeat(0).take(anchors.len())),
             poll_rx_ts: Vec::from_iter(core::iter::repeat(0).take(anchors.len())),
             response_rx_ts: Vec::from_iter(core::iter::repeat(0).take(anchors.len())),
             final_tx_ts: Vec::from_iter(core::iter::repeat(0).take(anchors.len())),
             final_rx_ts: Vec::from_iter(core::iter::repeat(0).take(anchors.len())),
             response_tx_ts: 0,
-            anchors: anchors,
-            tags: tags,
+            anchors,
+            tags,
 
             _state: Idle,
         }
@@ -100,10 +100,14 @@ impl TagSideStateMachine<WaitingForAnchorPoll> {
     }
 
     /// Set the TX timestamp for a poll message.
-    /// 
+    ///
     /// Will panic if the anchor address is not found.
     pub fn set_poll_tx_ts(&mut self, anchor_addr: u16, poll_tx_ts: u64) {
-        let anchor_idx = self.anchors.iter().position(|&addr| addr == anchor_addr).unwrap();
+        let anchor_idx = self
+            .anchors
+            .iter()
+            .position(|&addr| addr == anchor_addr)
+            .unwrap();
         self.poll_tx_ts[anchor_idx] = poll_tx_ts;
     }
 
@@ -113,10 +117,14 @@ impl TagSideStateMachine<WaitingForAnchorPoll> {
     }
 
     /// Set the RX timestamp for a poll message.
-    /// 
+    ///
     /// Will panic if the anchor address is not found.
     pub fn set_poll_rx_ts(&mut self, anchor_addr: u16, poll_rx_ts: u64) {
-        let anchor_idx = self.anchors.iter().position(|&addr| addr == anchor_addr).unwrap();
+        let anchor_idx = self
+            .anchors
+            .iter()
+            .position(|&addr| addr == anchor_addr)
+            .unwrap();
         self.poll_rx_ts[anchor_idx] = poll_rx_ts;
     }
 
@@ -149,12 +157,16 @@ impl TagSideStateMachine<WaitingForAnchorFinal> {
     pub fn set_response_rx_ts_idx(&mut self, anchor_idx: usize, response_rx_ts: u64) {
         self.response_rx_ts[anchor_idx] = response_rx_ts;
     }
-    
+
     /// Set the RX timestamp for a response message.
-    /// 
+    ///
     /// Will panic if the anchor address is not found.
     pub fn set_response_rx_ts(&mut self, anchor_addr: u16, response_rx_ts: u64) {
-        let anchor_idx = self.anchors.iter().position(|&addr| addr == anchor_addr).unwrap();
+        let anchor_idx = self
+            .anchors
+            .iter()
+            .position(|&addr| addr == anchor_addr)
+            .unwrap();
         self.response_rx_ts[anchor_idx] = response_rx_ts;
     }
 
@@ -164,10 +176,14 @@ impl TagSideStateMachine<WaitingForAnchorFinal> {
     }
 
     /// Set the TX timestamp for a final message. (parsed from the final message)
-    /// 
+    ///
     /// Will panic if the anchor address is not found.
     pub fn set_final_tx_ts(&mut self, anchor_addr: u16, final_tx_ts: u64) {
-        let anchor_idx = self.anchors.iter().position(|&addr| addr == anchor_addr).unwrap();
+        let anchor_idx = self
+            .anchors
+            .iter()
+            .position(|&addr| addr == anchor_addr)
+            .unwrap();
         self.final_tx_ts[anchor_idx] = final_tx_ts;
     }
 
@@ -177,10 +193,14 @@ impl TagSideStateMachine<WaitingForAnchorFinal> {
     }
 
     /// Set the RX timestamp for a final message. (retrieved from the RX timestamp register)
-    /// 
+    ///
     /// Will panic if the anchor address is not found.
     pub fn set_final_rx_ts(&mut self, anchor_addr: u16, final_rx_ts: u64) {
-        let anchor_idx = self.anchors.iter().position(|&addr| addr == anchor_addr).unwrap();
+        let anchor_idx = self
+            .anchors
+            .iter()
+            .position(|&addr| addr == anchor_addr)
+            .unwrap();
         self.final_rx_ts[anchor_idx] = final_rx_ts;
     }
 
@@ -241,7 +261,9 @@ impl AnyTagSideStateMachine {
         &mut self,
     ) -> Option<&mut TagSideStateMachine<WaitingForAnchorPoll>> {
         match &mut self.state_machine {
-            AnyTagSideStateMachineErased::WaitingForAnchorPoll(state_machine) => Some(state_machine),
+            AnyTagSideStateMachineErased::WaitingForAnchorPoll(state_machine) => {
+                Some(state_machine)
+            }
             _ => None,
         }
     }

@@ -1,6 +1,6 @@
 use bilge::prelude::*;
 use defmt::Format;
-use zerocopy_derive::{AsBytes, FromBytes, FromZeroes};
+use zerocopy_derive::{FromBytes, Immutable, IntoBytes};
 
 // A poll packet
 #[bitsize(48)]
@@ -43,7 +43,7 @@ impl Format for ResponsePacket {
 }
 
 // DW3000 40-bit timestamp
-#[derive(Debug, Format, Copy, Clone, PartialEq, FromZeroes, FromBytes, AsBytes)]
+#[derive(Debug, Format, Copy, Clone, PartialEq, FromBytes, IntoBytes, Immutable)]
 #[repr(packed)]
 pub struct DeviceTimestamp {
     pub bytes: [u8; 5],
@@ -70,7 +70,7 @@ pub struct PacketHeader {
 }
 
 // Final Packet
-#[derive(Debug, Format, Clone, Copy, PartialEq, FromZeroes, FromBytes, AsBytes)]
+#[derive(Debug, Format, Clone, Copy, PartialEq, FromBytes, IntoBytes, Immutable)]
 #[repr(packed)]
 pub struct FinalPacket {
     pub header_byte: u8,
@@ -80,7 +80,12 @@ pub struct FinalPacket {
 
 /// The Final Packet
 impl FinalPacket {
-    pub fn new(packet_type: PacketType, resv: u4, rx_timestamps: [u40; 3], tx_timestamp: u40) -> Self {
+    pub fn new(
+        packet_type: PacketType,
+        resv: u4,
+        rx_timestamps: [u40; 3],
+        tx_timestamp: u40,
+    ) -> Self {
         Self {
             header_byte: PacketHeader::new(packet_type, resv).value,
             rx_timestamps: [
@@ -113,7 +118,7 @@ pub enum PacketType {
 mod tests {
     use super::*;
 
-    use zerocopy::{AsBytes, transmute};
+    use zerocopy::{transmute, IntoBytes};
 
     #[test]
     fn test_poll_packet() {
